@@ -1,4 +1,4 @@
-package tridios.web.models;
+package tridios.gd.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 

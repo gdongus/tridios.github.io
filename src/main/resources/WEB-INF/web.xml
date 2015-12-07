@@ -6,7 +6,7 @@
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>tridios.web.JerseyResourceLoader</param-value>
+            <param-value>tridios.gd.JerseyResourceLoader</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -14,11 +14,4 @@
         <servlet-name>REST Servlet</servlet-name>
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
-
-    <resource-ref>
-        <description>DB Connection</description>
-        <res-ref-name>jdbc/Foo</res-ref-name>
-        <res-type>javax.sql.DataSource</res-type>
-        <res-auth>Container</res-auth>
-    </resource-ref>
 </web-app>

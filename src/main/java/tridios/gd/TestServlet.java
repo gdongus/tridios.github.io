@@ -1,4 +1,4 @@
-package tridios.web;
+package tridios.gd;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
