@@ -1,5 +1,7 @@
 package tridios.web.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,6 +10,9 @@ public class Foo {
     @GeneratedValue
     private Long id;
 
+    private String name;
+
+    @JsonBackReference
     @OneToOne(cascade = CascadeType.PERSIST)
     private BaseModel baseModel;
 
@@ -17,6 +22,14 @@ public class Foo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public BaseModel getBaseModel() {

@@ -1,5 +1,7 @@
 package tridios.web.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +13,7 @@ public class BaseModel {
     @GeneratedValue
     private Long id;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "baseModel", cascade = CascadeType.ALL)
     private Foo foo;
 

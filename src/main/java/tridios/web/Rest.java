@@ -12,11 +12,12 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/helloworld")
+@Path("/")
 public class Rest {
     public static Logger LOG = LoggerFactory.getLogger(Rest.class);
 
@@ -24,34 +25,42 @@ public class Rest {
     private EntityManager em;
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Path("widget")
+    @Produces(MediaType.APPLICATION_JSON)
     @SuppressWarnings("unchecked")
-    public String sayHello() throws Exception {
+    public List<Foo> sayHello() throws Exception {
+        TypedQuery query = em.createQuery("SELECT f FROM Foo f where f.id <= :id ", Foo.class);
+        query.setParameter("id", 23L);
+        List<Foo> list = query.getResultList();
+
+        return list;
+    }
+
+    @GET
+    @Path("widget/{name}")
+    public String getWidgetById(@PathParam("name") String name) {
         EntityTransaction tx = null;
         try {
             tx = em.getTransaction();
             tx.begin();
 
-            TypedQuery query = em.createQuery("SELECT b FROM BaseModel b where b.id <= :id ", BaseModel.class);
-            query.setParameter("id", 23L);
-            List<BaseModel> list = query.getResultList();
-
             final Foo foo = new Foo();
+            foo.setName(name);
+
             final BaseModel baseModel = new BaseModel();
             foo.setBaseModel(baseModel);
 
             em.persist(foo);
-            LOG.info("Persisted foo: " + foo.getId());
-
             tx.commit();
-        }
-        catch (RuntimeException e) {
-            if ( tx != null && tx.isActive() ) tx.rollback();
+
+            LOG.info("Persisted: " + foo.getId());
+        } catch (RuntimeException e) {
+            if (tx != null && tx.isActive()) tx.rollback();
             throw e; // or display error message
-        }
-        finally {
+        } finally {
             em.close();
         }
+
         return "Hello World from Tomcat Embedded with Jersey!";
     }
 }
