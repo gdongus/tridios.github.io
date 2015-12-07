@@ -34,8 +34,6 @@ public class Main {
         Tomcat.addServlet(ctx, "dateServlet", new org.glassfish.jersey.servlet.ServletContainer());
         ctx.addServletMapping("/rest", "dateServlet");
 
-
-        ctx.addApplicationLifecycleListener(new HibernateContextListener());
         ctx.addApplicationListener(Listener.class.getName());
 
         tomcat.start();
