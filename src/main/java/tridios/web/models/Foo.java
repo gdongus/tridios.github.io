@@ -8,7 +8,7 @@ public class Foo {
     @GeneratedValue
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private BaseModel baseModel;
 
     public Long getId() {
