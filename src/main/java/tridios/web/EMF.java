@@ -1,5 +1,6 @@
 package tridios.web;
 
+import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -22,6 +23,7 @@ public class EMF implements ServletContextListener {
         emf.close();
     }
 
+    @Produces
     public static EntityManager createEntityManager() {
         if (emf == null) {
             throw new IllegalStateException("Context is not initialized yet.");

@@ -21,13 +21,12 @@ public class Rest {
     public static Logger LOG = LoggerFactory.getLogger(Rest.class);
 
     @Inject
-    private EMF emf;
+    private EntityManager em;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @SuppressWarnings("unchecked")
     public String sayHello() throws Exception {
-        EntityManager em = emf.createEntityManager();
         EntityTransaction tx = null;
         try {
             tx = em.getTransaction();
