@@ -4,6 +4,7 @@ package tridios.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tridios.web.models.BaseModel;
+import tridios.web.models.Foo;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -35,8 +36,14 @@ public class Rest {
             TypedQuery query = em.createQuery("SELECT b FROM BaseModel b where b.id <= :id ", BaseModel.class);
             query.setParameter("id", 23L);
             List<BaseModel> list = query.getResultList();
+
+            final Foo foo = new Foo();
             final BaseModel baseModel = new BaseModel();
-            em.persist(baseModel);
+            foo.setBaseModel(baseModel);
+
+            em.persist(foo);
+            LOG.info("Persisted foo: " + foo.getId());
+
             tx.commit();
         }
         catch (RuntimeException e) {
