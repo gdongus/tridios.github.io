@@ -33,6 +33,20 @@ public class Main {
         Tomcat.addServlet(ctx, "dateServlet", new org.glassfish.jersey.servlet.ServletContainer());
         ctx.addServletMapping("/rest", "dateServlet");
 
+        ContextResource resource = new ContextResource();
+        resource.setType("javax.sql.DataSource");
+        resource.setScope("Sharable");
+        resource.setAuth("Container");
+        resource.setName("jdbc/db");
+        resource.setProperty("driverClassName", "com.mysql.jdbc.Driver");
+        resource.setProperty("url", "jdbc:mysql://localhost:3306/javatest");
+        resource.setProperty("username", "root");
+        resource.setProperty("password", "root");
+        resource.setProperty("defaultTransactionIsolation", "READ_UNCOMMITTED");
+
+        tomcat.enableNaming();
+        ctx.getNamingResources().addResource(resource);
+
         ctx.addApplicationListener(Listener.class.getName());
 
         tomcat.start();
