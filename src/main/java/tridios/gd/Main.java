@@ -6,11 +6,14 @@ import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
+import org.apache.tomcat.util.descriptor.web.ContextResource;
 import org.jboss.weld.environment.servlet.Listener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 import java.io.File;
 import java.net.MalformedURLException;
 
@@ -29,19 +32,15 @@ public class Main {
         resources.addPreResources(new DirResourceSet(resources, "/WEB-INF/classes", additionWebInfClasses.getAbsolutePath(), "/"));
         ctx.setResources(resources);
 
-        //
-        Tomcat.addServlet(ctx, "dateServlet", new org.glassfish.jersey.servlet.ServletContainer());
-        ctx.addServletMapping("/rest", "dateServlet");
-
         ContextResource resource = new ContextResource();
         resource.setType("javax.sql.DataSource");
         resource.setScope("Sharable");
         resource.setAuth("Container");
         resource.setName("jdbc/db");
-        resource.setProperty("driverClassName", "com.mysql.jdbc.Driver");
-        resource.setProperty("url", "jdbc:mysql://localhost:3306/javatest");
-        resource.setProperty("username", "root");
-        resource.setProperty("password", "root");
+        resource.setProperty("driverClassName", "org.postgresql.Driver");
+        resource.setProperty("url", "jdbc:postgresql://localhost:5432/test");
+        resource.setProperty("username", "gd");
+        resource.setProperty("password", "postgres");
         resource.setProperty("defaultTransactionIsolation", "READ_UNCOMMITTED");
 
         tomcat.enableNaming();

@@ -1,11 +1,9 @@
 package tridios.gd;
 
 import org.reflections.Reflections;
-import tridios.gd.web.Rest;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
-import java.util.HashSet;
 import java.util.Set;
 
 public class JerseyResourceLoader extends Application{
